@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" name="SIPS">
+	<Properties>
+		<Property name="log-path">${log4j2.path}</Property>
+	</Properties>
+	
+	<Appenders>
+		<Console name="console-log" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
+		</Console>
+		
+		 <RollingFile name="file-log" 
+		 			  fileName="${log4j2.fileName}" 
+		 			  filePattern="${log4j2.filePattern}"
+		 			  append="false">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="3 MB" />
+            </Policies>
+        </RollingFile>
+	</Appenders>
+	
+	<Loggers>
+		<Root level="info" additivity="false">
+			<AppenderRef ref="console-log" />
+			<AppenderRef ref="file-log" level="info" />
+		</Root>
+		
+		<Logger name="com.ayesa.psdcg" level="info" additivity="false">
+			<appender-ref ref="file-log" level="info" />
+			<appender-ref ref="console-log" level="info" />
+		</Logger>
+		
+		<Logger name="org.apache.logging.log4j" level="info" additivity="false">
+			<appender-ref ref="file-log" level="info" />
+			<appender-ref ref="console-log" level="info" />
+		</Logger>
+		
+		<Logger name="org.hibernate" level="info" additivity="false">
+			<appender-ref ref="file-log" level="info" />
+			<appender-ref ref="console-log" level="info" />
+		</Logger>
+	</Loggers>
+	
+</Configuration>
